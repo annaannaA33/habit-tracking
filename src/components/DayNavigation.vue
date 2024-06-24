@@ -2,13 +2,8 @@
   <div class="day-navigation">
     <div class="nav-button">
       <button @click="prevDay">Prev</button>
-
-      <div></div>
-
-      <div>{{ selectedDate }}</div>
-
+      <div>{{ isToday(selectedDate) ? 'Today' : selectedDate }}</div>
       <button @click="nextDay">Next</button>
-
       <button @click="showCalendar = true">Calendar</button>
       <CalendarModal
         v-if="showCalendar"
@@ -16,7 +11,6 @@
         @close="showCalendar = false"
       />
     </div>
-
     <div class="seven-day-nav">
       <button
         v-for="day in days"
@@ -31,16 +25,22 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import { defineEmits } from 'vue'
 import CalendarModal from './CalendarModal.vue'
+
+// Вынесем formatDate вверх
+const formatDate = (date) => {
+  const day = date.getDate().toString().padStart(2, '0')
+  const month = (date.getMonth() + 1).toString().padStart(2, '0')
+  const year = date.getFullYear()
+  return `${year}-${month}-${day}`
+}
 
 const showCalendar = ref(false)
 const router = useRouter()
 const currentDate = ref(new Date())
-const selectedDate = ref(null)
-const emit = defineEmits(['dateSelected'])
+const selectedDate = ref(formatDate(currentDate.value))
 
 const days = computed(() => {
   const result = []
@@ -48,8 +48,8 @@ const days = computed(() => {
     const date = new Date()
     date.setDate(currentDate.value.getDate() + i)
     result.push({
-      date: date.toISOString().split('T')[0],
-      label: date.toDateString()
+      date: formatDate(date),
+      label: i === 0 ? 'Today' : date.toDateString()
     })
   }
   return result
@@ -57,39 +57,41 @@ const days = computed(() => {
 
 const formattedDate = computed(() => formatDate(currentDate.value))
 
-const formatDate = (date) => {
-  const day = date.getDate().toString().padStart(2, '0')
-  const month = (date.getMonth() + 1).toString().padStart(2, '0')
-  const year = date.getFullYear()
-  return `${day}-${month}-${year}`
+const isToday = (date) => {
+  return date === formattedDate.value
 }
 
 const selectDay = (date) => {
   selectedDate.value = date
-  emit('dateSelected', date)
   router.push(`/day/${date}`)
 }
 
 const prevDay = () => {
   currentDate.value.setDate(currentDate.value.getDate() - 1)
+  selectedDate.value = formatDate(currentDate.value)
+  router.push(`/day/${selectedDate.value}`)
 }
 
 const nextDay = () => {
   currentDate.value.setDate(currentDate.value.getDate() + 1)
+  selectedDate.value = formatDate(currentDate.value)
+  router.push(`/day/${selectedDate.value}`)
 }
 
 const selectDateFromCalendar = (date) => {
   selectedDate.value = date
-  emit('dateSelected', date)
   router.push(`/day/${date}`)
 }
 
-if (selectedDate.value == formattedDate.value) {
-  selectedDate.value = 'Today'
-} else {
-  console.log(selectedDate.value)
-  console.log(formattedDate.value)
-}
+watch(currentDate, (newDate) => {
+  selectedDate.value = formatDate(newDate)
+})
+
+watch(selectedDate, (newDate) => {
+  if (isToday(newDate)) {
+    selectedDate.value = 'Today'
+  }
+})
 </script>
 
 <style>
@@ -111,7 +113,7 @@ if (selectedDate.value == formattedDate.value) {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin: 5% 0 5% 0;
+  margin: 5% 0;
 }
 
 .active {
