@@ -37,7 +37,7 @@ npm run lint
 src/
 ---assets/
 ---components/
-------CalendarModal.vue
+
 ------DayNavigation.vue
 ------HabitList.vue
 ---router/
