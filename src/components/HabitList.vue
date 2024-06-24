@@ -37,7 +37,7 @@ const toggleHabit = (id) => {
 }
 
 const editHabit = (id) => {
-  // Ваша логика редактирования привычки
+  //TODO
 }
 
 const deleteHabit = (id) => {

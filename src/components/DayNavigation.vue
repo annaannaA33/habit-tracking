@@ -1,5 +1,5 @@
 <template>
-  <div class="day-navigation" @click="handleOutsideClick">
+  <div class="day-navigation">
     <div class="nav-button">
       <button @click="prevDay">Prev</button>
       <div>{{ isToday(selectedDate) ? 'Today' : selectedDate }}</div>
@@ -22,7 +22,6 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import CalendarModal from './CalendarModal.vue'
 
 const formatDate = (date) => {
   const day = date.getDate().toString().padStart(2, '0')
@@ -31,7 +30,6 @@ const formatDate = (date) => {
   return `${year}-${month}-${day}`
 }
 
-const showCalendar = ref(false)
 const router = useRouter()
 const currentDate = ref(new Date())
 const selectedDate = ref(formatDate(currentDate.value))
@@ -72,23 +70,6 @@ const nextDay = () => {
   selectedDate.value = formatDate(currentDate.value)
   selectedDateInput.value = selectedDate.value
   router.push(`/day/${selectedDate.value}`)
-}
-
-const selectDateFromCalendar = (date) => {
-  selectedDate.value = date
-  selectedDateInput.value = date
-  router.push(`/day/${date}`)
-  showCalendar.value = false
-}
-
-const handleOutsideClick = (event) => {
-  if (!event.target.closest('.nav-button')) {
-    hideCalendar()
-  }
-}
-
-const hideCalendar = () => {
-  showCalendar.value = false
 }
 </script>
 
