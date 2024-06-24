@@ -4,4 +4,8 @@
 
 <script setup></script>
 
-<style></style>
+<style>
+#app {
+  padding: 1rem;
+}
+</style>

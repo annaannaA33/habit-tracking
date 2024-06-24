@@ -1,15 +1,10 @@
 <template>
-  <div class="day-navigation">
+  <div class="day-navigation" @click="handleOutsideClick">
     <div class="nav-button">
       <button @click="prevDay">Prev</button>
       <div>{{ isToday(selectedDate) ? 'Today' : selectedDate }}</div>
       <button @click="nextDay">Next</button>
-      <button @click="showCalendar = true">Calendar</button>
-      <CalendarModal
-        v-if="showCalendar"
-        @select-date="selectDateFromCalendar"
-        @close="showCalendar = false"
-      />
+      <input type="date" placeholder="select date" v-model="selectedDate" />
     </div>
     <div class="seven-day-nav">
       <button
@@ -25,11 +20,10 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import CalendarModal from './CalendarModal.vue'
 
-// Вынесем formatDate вверх
 const formatDate = (date) => {
   const day = date.getDate().toString().padStart(2, '0')
   const month = (date.getMonth() + 1).toString().padStart(2, '0')
@@ -41,6 +35,7 @@ const showCalendar = ref(false)
 const router = useRouter()
 const currentDate = ref(new Date())
 const selectedDate = ref(formatDate(currentDate.value))
+const selectedDateInput = ref(formatDate(currentDate.value))
 
 const days = computed(() => {
   const result = []
@@ -57,44 +52,47 @@ const days = computed(() => {
 
 const formattedDate = computed(() => formatDate(currentDate.value))
 
-const isToday = (date) => {
-  return date === formattedDate.value
-}
+const isToday = (date) => date === formattedDate.value
 
 const selectDay = (date) => {
   selectedDate.value = date
+  selectedDateInput.value = date
   router.push(`/day/${date}`)
 }
 
 const prevDay = () => {
   currentDate.value.setDate(currentDate.value.getDate() - 1)
   selectedDate.value = formatDate(currentDate.value)
+  selectedDateInput.value = selectedDate.value
   router.push(`/day/${selectedDate.value}`)
 }
 
 const nextDay = () => {
   currentDate.value.setDate(currentDate.value.getDate() + 1)
   selectedDate.value = formatDate(currentDate.value)
+  selectedDateInput.value = selectedDate.value
   router.push(`/day/${selectedDate.value}`)
 }
 
 const selectDateFromCalendar = (date) => {
   selectedDate.value = date
+  selectedDateInput.value = date
   router.push(`/day/${date}`)
+  showCalendar.value = false
 }
 
-watch(currentDate, (newDate) => {
-  selectedDate.value = formatDate(newDate)
-})
-
-watch(selectedDate, (newDate) => {
-  if (isToday(newDate)) {
-    selectedDate.value = 'Today'
+const handleOutsideClick = (event) => {
+  if (!event.target.closest('.nav-button')) {
+    hideCalendar()
   }
-})
+}
+
+const hideCalendar = () => {
+  showCalendar.value = false
+}
 </script>
 
-<style>
+<style scoped>
 .seven-day-nav {
   display: flex;
   flex-direction: row;
@@ -103,9 +101,12 @@ watch(selectedDate, (newDate) => {
 }
 
 .seven-day-nav button {
-  width: 10%;
+  display: flex;
+  width: 12%;
+  max-height: 30%;
   font-size: 10px;
   align-items: center;
+  justify-content: center;
 }
 
 .nav-button {
@@ -113,7 +114,7 @@ watch(selectedDate, (newDate) => {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin: 5% 0;
+  margin: 10% 0;
 }
 
 .active {
