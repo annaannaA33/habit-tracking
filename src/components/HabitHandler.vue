@@ -1,29 +1,22 @@
 <template>
   <div class="habit-handler">
-    <button @click="showForm = !showForm">Добавить Привычку</button>
+    <button @click="showForm = !showForm">Add a new Habit</button>
     <div v-if="showForm" class="form-container">
       <form @submit.prevent="addHabit">
         <div>
-          <label for="habitName">Название Привычки:</label>
+          <label for="habitName">Habit name:</label>
           <input type="text" id="habitName" v-model="habitName" required />
         </div>
         <div>
-          <label for="category">Категория:</label>
+          <label for="category">Category:</label>
           <select id="category" v-model="selectedCategory" required>
             <option v-for="category in categories" :key="category" :value="category">
               {{ category }}
             </option>
           </select>
         </div>
-        <div>
-          <label for="logo">Значок:</label>
-          <select id="logo" v-model="selectedLogo" required>
-            <option v-for="(logo, key) in logos" :key="key" :value="logo">
-              {{ logo }}
-            </option>
-          </select>
-        </div>
-        <button type="submit">Добавить</button>
+
+        <button type="submit">Add</button>
       </form>
     </div>
   </div>
@@ -39,7 +32,6 @@ const selectedCategory = ref('')
 const selectedLogo = ref('')
 
 const categories = habitsStore.state.categories.titles
-const logos = habitsStore.state.categories.logos
 
 const addHabit = () => {
   habitsStore.addHabit(habitName.value, selectedCategory.value, selectedLogo.value)
