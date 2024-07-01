@@ -39,6 +39,7 @@ src/
 ---components/
 ------DayNavigation.vue
 ------HabitList.vue
+------HabitItem.vue
 ---router/
 index.js
 ---stores/

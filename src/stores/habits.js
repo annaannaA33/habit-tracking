@@ -1,50 +1,68 @@
-// src/stores/habits.js
 import { reactive } from 'vue'
 
-const habits = reactive({
-  '2024-06-24': [
-    { id: 1, name: 'Exercise', completed: true },
-    { id: 2, name: 'Read', completed: false }
+const state = reactive({
+  habits: [
+    { id: 1, name: 'Exercise', category: 'sport', dates: {} },
+    { id: 2, name: 'Read', category: 'education', dates: {} },
+    { id: 3, name: 'Drink water', category: 'health', dates: {} }
   ],
-  '2024-06-25': [{ id: 3, name: 'Meditate', completed: false }]
+  categories: {
+    titles: ['sport', 'health', 'beauty', 'finance', 'socialization', 'education'],
+    colors: {
+      sport: 'violet',
+      health: 'orange',
+      beauty: 'pink',
+      finance: 'blue',
+      socialization: 'yellow',
+      education: 'light blue'
+    },
+    logos: {
+      sport: '🚴‍♂️',
+      health: '🍎',
+      beauty: '🌸',
+      finance: '📊',
+      socialization: '🤝',
+      education: '📚'
+    }
+  }
 })
 
 const getHabitsByDate = (date) => {
-  return habits[date] || []
-}
-
-const addHabit = (name, date) => {
-  if (!habits[date]) {
-    habits[date] = []
-  }
-  habits[date].push({ id: Date.now(), name, completed: false })
+  return state.habits.map((habit) => ({
+    ...habit,
+    completed: habit.dates[date] || false
+  }))
 }
 
 const toggleHabitCompletion = (id, date) => {
-  const habit = habits[date]?.find((h) => h.id === id)
+  const habit = state.habits.find((habit) => habit.id === id)
   if (habit) {
-    habit.completed = !habit.completed
+    habit.dates[date] = !habit.dates[date]
   }
 }
 
-const editHabitName = (id, newName, date) => {
-  const habit = habits[date]?.find((h) => h.id === id)
-  if (habit) {
-    habit.name = newName
+const addHabit = (name, category, logo) => {
+  const newHabit = {
+    id: state.habits.length + 1,
+    name,
+    category,
+    logo,
+    dates: {}
   }
+  state.habits.push(newHabit)
 }
 
-const removeHabit = (id, date) => {
-  const index = habits[date]?.findIndex((h) => h.id === id)
+const deleteHabit = (id) => {
+  const index = state.habits.findIndex((habit) => habit.id === id)
   if (index !== -1) {
-    habits[date].splice(index, 1)
+    state.habits.splice(index, 1)
   }
 }
 
 export default {
+  state,
   getHabitsByDate,
-  addHabit,
   toggleHabitCompletion,
-  editHabitName,
-  removeHabit
+  addHabit,
+  deleteHabit
 }
