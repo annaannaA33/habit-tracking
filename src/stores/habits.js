@@ -58,7 +58,7 @@ const addHabit = (name, category, logo) => {
     name,
     category,
     logo,
-    dates: {} // Инициализируем объект dates
+    dates: {}
   }
   state.habits.push(newHabit)
   saveHabitsToLocalStorage()
