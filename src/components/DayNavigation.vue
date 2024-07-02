@@ -4,7 +4,12 @@
       <button @click="prevDay">Prev</button>
       <div>{{ isToday(selectedDate) ? 'Today' : selectedDate }}</div>
       <button @click="nextDay">Next</button>
-      <input type="date" placeholder="select date" v-model="selectedDate" />
+      <input
+        type="date"
+        placeholder="select date"
+        v-model="selectedDateInput"
+        @change="updateDateFromInput"
+      />
     </div>
     <div class="seven-day-nav">
       <button
@@ -20,7 +25,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
 const formatDate = (date) => {
@@ -56,6 +61,7 @@ const selectDay = (date) => {
   selectedDate.value = date
   selectedDateInput.value = date
   router.push(`/day/${date}`)
+  emit('update:selectedDate', date)
 }
 
 const prevDay = () => {
@@ -63,6 +69,7 @@ const prevDay = () => {
   selectedDate.value = formatDate(currentDate.value)
   selectedDateInput.value = selectedDate.value
   router.push(`/day/${selectedDate.value}`)
+  emit('update:selectedDate', selectedDate.value)
 }
 
 const nextDay = () => {
@@ -70,7 +77,20 @@ const nextDay = () => {
   selectedDate.value = formatDate(currentDate.value)
   selectedDateInput.value = selectedDate.value
   router.push(`/day/${selectedDate.value}`)
+  emit('update:selectedDate', selectedDate.value)
 }
+
+const updateDateFromInput = () => {
+  selectedDate.value = selectedDateInput.value
+  router.push(`/day/${selectedDate.value}`)
+  emit('update:selectedDate', selectedDate.value)
+}
+
+const emit = defineEmits(['update:selectedDate'])
+
+watch(selectedDate, (newDate) => {
+  emit('update:selectedDate', newDate)
+})
 </script>
 
 <style scoped>

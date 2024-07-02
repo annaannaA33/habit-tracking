@@ -1,5 +1,8 @@
 <template>
   <div class="habit-list">
+    <div v-if="isFutureDate" class="future-date-message">
+      You can view your habits, but you can only mark them as completed after the selected date.
+    </div>
     <div v-for="habit in habits" :key="habit.id" class="habit-item">
       <input
         type="checkbox"
@@ -9,7 +12,7 @@
       />
       <span>{{ habit.name }}</span>
       <span>{{ habitsStore.state.categories.logos[habit.category] }}</span>
-      <button @click="deleteHabit(habit.id)">Delete</button>
+      <button @click="deleteHabit(habit.id)" :disabled="isFutureDate">Delete</button>
     </div>
     <HabitHandler />
   </div>
@@ -51,5 +54,10 @@ const deleteHabit = (id) => {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.future-date-message {
+  color: red;
+  margin-bottom: 10px;
 }
 </style>

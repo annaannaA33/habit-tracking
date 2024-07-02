@@ -50,3 +50,7 @@ index.js
 App.vue
 main.js
 index.html
+
+Allow switching between light and dark mode.
+Add animations and transitions that celebrate the user's progress.
+Use Pinia for state management.

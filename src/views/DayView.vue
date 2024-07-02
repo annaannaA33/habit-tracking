@@ -1,12 +1,12 @@
 <template>
   <div class="day-view">
-    <DayNavigation @dateSelected="updateDate" />
+    <DayNavigation @update:selectedDate="updateDate" />
     <HabitList :date="selectedDate" />
   </div>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import DayNavigation from '../components/DayNavigation.vue'
 import HabitList from '../components/HabitList.vue'
@@ -27,18 +27,16 @@ const updateDate = (newDate) => {
   router.push(`/day/${newDate}`)
 }
 
-watch(
-  () => route.params.date,
-  (newDate) => {
-    selectedDate.value = newDate || formatDate(new Date())
-  }
-)
+if (!route.params.date) {
+  router.push(`/day/${selectedDate.value}`)
+}
 </script>
 
 <style>
 .day-view {
   display: flex;
+  justify-content: space-between;
   flex-direction: column;
-  gap: 20px;
+  height: 750px;
 }
 </style>

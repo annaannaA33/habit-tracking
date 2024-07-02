@@ -1,62 +1,59 @@
 <template>
   <div class="habit-handler">
-    <button @click="showForm = !showForm">Add a new Habit</button>
-    <div v-if="showForm" class="form-container">
-      <form @submit.prevent="addHabit">
-        <div>
-          <label for="habitName">Habit name:</label>
-          <input type="text" id="habitName" v-model="habitName" required />
-        </div>
-        <div>
-          <label for="category">Category:</label>
-          <select id="category" v-model="selectedCategory" required>
-            <option v-for="category in categories" :key="category" :value="category">
-              {{ category }}
-            </option>
-          </select>
-        </div>
-
-        <button type="submit">Add</button>
-      </form>
-    </div>
+    <input v-model="newHabitName" placeholder="New habit name" />
+    <select v-model="newHabitCategory">
+      <option v-for="title in categories.titles" :key="title" :value="title">{{ title }}</option>
+    </select>
+    <button @click="addNewHabit">Add Habit</button>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import habitsStore from '../stores/habits.js'
+import { addHabit } from '../stores/habits.js'
 
-const showForm = ref(false)
-const habitName = ref('')
-const selectedCategory = ref('')
-const selectedLogo = ref('')
+const newHabitName = ref('')
+const newHabitCategory = ref('sport')
 
-const categories = habitsStore.state.categories.titles
+const categories = {
+  titles: ['sport', 'health', 'beauty', 'finance', 'socialization', 'education'],
+  colors: {
+    sport: 'violet',
+    health: 'orange',
+    beauty: 'pink',
+    finance: 'blue',
+    socialization: 'yellow',
+    education: 'light blue'
+  },
+  logos: {
+    sport: '🚴‍♂️',
+    health: '🍎',
+    beauty: '🌸',
+    finance: '📊',
+    socialization: '🤝',
+    education: '📚'
+  }
+}
 
-const addHabit = () => {
-  habitsStore.addHabit(habitName.value, selectedCategory.value, selectedLogo.value)
-  habitName.value = ''
-  selectedCategory.value = ''
-  selectedLogo.value = ''
-  showForm.value = false
+const addNewHabit = () => {
+  if (newHabitName.value && newHabitCategory.value) {
+    const newHabit = {
+      id: Date.now(),
+      name: newHabitName.value,
+      category: newHabitCategory.value,
+      dates: {}
+    }
+    addHabit(newHabit)
+    newHabitName.value = ''
+    newHabitCategory.value = 'sport'
+  }
 }
 </script>
 
 <style scoped>
 .habit-handler {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  margin-top: 20px;
-}
-
-.form-container {
-  margin-top: 10px;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
   gap: 10px;
 }
 </style>

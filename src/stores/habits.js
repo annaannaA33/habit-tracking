@@ -90,3 +90,4 @@ export default {
   deleteHabit,
   editHabitName
 }
+export { addHabit, getHabitsByDate, toggleHabitCompletion }
