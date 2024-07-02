@@ -1,6 +1,10 @@
 <template>
   <div class="day-view">
-    <DayNavigation @update:selectedDate="updateDate" />
+    <div>
+      Habit Tracker
+      <DayNavigation @update:selectedDate="updateDate" />
+    </div>
+
     <HabitList :date="selectedDate" />
   </div>
 </template>
