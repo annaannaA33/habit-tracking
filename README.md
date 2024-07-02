@@ -54,3 +54,11 @@ index.html
 Allow switching between light and dark mode.
 Add animations and transitions that celebrate the user's progress.
 Use Pinia for state management.
+
+tasks:
+light background design;
+dark background design;
+the buttons are all in the same style;
+linter;
+pritier;
+build the application;
