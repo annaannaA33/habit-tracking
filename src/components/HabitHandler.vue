@@ -14,6 +14,7 @@ import { addHabit } from '../stores/habits.js'
 
 const newHabitName = ref('')
 const newHabitCategory = ref('sport')
+const emit = defineEmits(['habit-added'])
 
 const categories = {
   titles: ['sport', 'health', 'beauty', 'finance', 'socialization', 'education'],
@@ -44,6 +45,7 @@ const addNewHabit = () => {
       dates: {}
     }
     addHabit(newHabit)
+    emit('habit-added')
     newHabitName.value = ''
     newHabitCategory.value = 'sport'
   }

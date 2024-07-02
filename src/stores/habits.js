@@ -52,15 +52,8 @@ const toggleHabitCompletion = (id, date) => {
   }
 }
 
-const addHabit = (name, category, logo) => {
-  const newHabit = {
-    id: state.habits.length + 1,
-    name,
-    category,
-    logo,
-    dates: {}
-  }
-  state.habits.push(newHabit)
+const addHabit = (habit) => {
+  state.habits.push(habit)
   saveHabitsToLocalStorage()
 }
 
@@ -90,4 +83,11 @@ export default {
   deleteHabit,
   editHabitName
 }
-export { addHabit, getHabitsByDate, toggleHabitCompletion }
+
+export {
+  getHabitsByDate,
+  toggleHabitCompletion,
+  addHabit, // Ensure this is exported
+  deleteHabit,
+  editHabitName
+}

@@ -14,12 +14,12 @@
       <span>{{ habitsStore.state.categories.logos[habit.category] }}</span>
       <button @click="deleteHabit(habit.id)" :disabled="isFutureDate">Delete</button>
     </div>
-    <HabitHandler />
+    <HabitHandler @habit-added="refreshHabits" />
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, watchEffect } from 'vue'
 import habitsStore from '../stores/habits.js'
 import HabitHandler from './HabitHandler.vue'
 
@@ -27,7 +27,11 @@ const props = defineProps({
   date: String
 })
 
-const habits = computed(() => habitsStore.getHabitsByDate(props.date))
+const habits = ref([])
+
+const refreshHabits = () => {
+  habits.value = habitsStore.getHabitsByDate(props.date)
+}
 
 const isFutureDate = computed(() => {
   const today = new Date().toISOString().split('T')[0]
@@ -36,11 +40,15 @@ const isFutureDate = computed(() => {
 
 const toggleHabit = (id) => {
   habitsStore.toggleHabitCompletion(id, props.date)
+  refreshHabits()
 }
 
 const deleteHabit = (id) => {
   habitsStore.deleteHabit(id)
+  refreshHabits()
 }
+
+watchEffect(refreshHabits)
 </script>
 
 <style scoped>
