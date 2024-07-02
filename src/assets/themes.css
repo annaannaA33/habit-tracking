@@ -1,14 +1,14 @@
 :root {
-  --background-color: #ffffff;
+  --background-color: #ffffffbd;
   --text-color: #000000;
-  --primary-color: #6200ea;
-  --button-background: #6200ea;
+  --primary-color: #e38f20b7;
+  --button-background: #030204;
   --button-text-color: #ffffff;
 }
 
 [data-theme='dark'] {
   --background-color: #121212;
-  --text-color: #ffffff;
+  --text-color: #ffffffdf;
   --primary-color: #bb86fc;
   --button-background: #bb86fc;
   --button-text-color: #000000;
