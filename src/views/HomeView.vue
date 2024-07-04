@@ -20,7 +20,4 @@ const currentDate = ref(new Date().toISOString().split('T')[0])
   flex-direction: column;
   height: 750px;
 }
-button {
-  border-radius: 15%;
-}
 </style>

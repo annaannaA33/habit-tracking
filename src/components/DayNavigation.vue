@@ -97,7 +97,6 @@ watch(selectedDate, (newDate) => {
 .seven-day-nav {
   display: flex;
   flex-direction: row;
-  gap: 10px;
   justify-content: space-between;
 }
 

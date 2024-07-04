@@ -2,6 +2,7 @@
   <div :data-theme="theme">
     <header>
       <button @click="toggleTheme">Toggle Theme</button>
+      <H1>Habit Tracker</H1>
     </header>
     <main>
       <router-view />
@@ -24,8 +25,10 @@ const toggleTheme = () => {
 @import 'src/assets/themes.css';
 
 body {
+  margin: 20px 10px 15px 10px;
   background-color: var(--background-color);
   color: var(--text-color);
+  padding: 0;
 }
 
 button {

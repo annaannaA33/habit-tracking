@@ -1,7 +1,6 @@
 <template>
   <div class="day-view">
     <div>
-      Habit Tracker
       <DayNavigation @update:selectedDate="updateDate" />
     </div>
 
