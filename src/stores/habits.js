@@ -84,10 +84,4 @@ export default {
   editHabitName
 }
 
-export {
-  getHabitsByDate,
-  toggleHabitCompletion,
-  addHabit, // Ensure this is exported
-  deleteHabit,
-  editHabitName
-}
+export { getHabitsByDate, toggleHabitCompletion, addHabit, deleteHabit, editHabitName }

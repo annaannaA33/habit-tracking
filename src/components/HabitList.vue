@@ -65,7 +65,14 @@ watchEffect(refreshHabits)
 }
 
 .future-date-message {
-  color: red;
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  color: rgb(250, 127, 19);
   margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 200%;
+  background-color: rgb(197, 189, 179);
+  border-radius: 5px;
 }
 </style>

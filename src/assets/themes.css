@@ -1,7 +1,7 @@
 :root {
   --background-color: #ffffffbd;
   --text-color: #000000;
-  --primary-color: #e38f20b7;
+  --primary-color: #f7900ab7;
   --button-background: #030204;
   --button-text-color: #ffffff;
 }
@@ -33,4 +33,8 @@ button {
 
 button:hover {
   opacity: 0.8;
+}
+
+input {
+  border-radius: 5px;
 }

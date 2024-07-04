@@ -1,8 +1,7 @@
 <template>
   <div :data-theme="theme">
     <header>
-      <button @click="toggleTheme">Toggle Theme</button>
-      <H1>Habit Tracker</H1>
+      <button @click="toggleTheme">{{ isLightTheme }}</button>
     </header>
     <main>
       <router-view />
@@ -19,6 +18,19 @@ const toggleTheme = () => {
   theme.value = theme.value === 'light' ? 'dark' : 'light'
   document.documentElement.setAttribute('data-theme', theme.value)
 }
+
+const themeValue = theme.value
+console.log(themeValue)
+function isLight(themeValue) {
+  //themeValue === 'light' ? 'DARK' : 'LIGHT'
+  if (themeValue === 'light') {
+    return 'DARK'
+  } else {
+    return 'LIGHT'
+  }
+}
+const isLightTheme = isLight(themeValue)
+console.log(isLightTheme)
 </script>
 
 <style>
