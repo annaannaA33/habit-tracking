@@ -1,9 +1,12 @@
 :root {
-  --background-color: #ffffffbd;
+  --background-color: #eeeeeb;
   --text-color: #000000;
-  --primary-color: #f7900ab7;
+  --primary-color: #febc57;
   --button-background: #030204;
   --button-text-color: #ffffff;
+  --done-color: #ffa319;
+  --animation-color: #b0f1e6;
+  --notification-color: #f0a692;
 }
 
 [data-theme='dark'] {
@@ -12,6 +15,7 @@
   --primary-color: #bb86fc;
   --button-background: #bb86fc;
   --button-text-color: #000000;
+  --done-color: #9a13f4;
 }
 
 body {
@@ -38,4 +42,6 @@ button:hover {
 
 input {
   border-radius: 5px;
+  font-size: 16px;
+  padding: 8px 20px;
 }

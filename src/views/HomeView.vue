@@ -18,6 +18,6 @@ const currentDate = ref(new Date().toISOString().split('T')[0])
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  height: 750px;
+  height: 100%;
 }
 </style>
