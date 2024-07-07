@@ -13,6 +13,7 @@
       <span>{{ habit.name }}</span>
       <span>{{ habitsStore.state.categories.logos[habit.category] }}</span>
       <button @click="deleteHabit(habit.id)" :disabled="isFutureDate">Delete</button>
+      <EditModal />
     </div>
     <HabitHandler @habit-added="refreshHabits" />
   </div>
@@ -22,6 +23,7 @@
 import { computed, ref, watchEffect } from 'vue'
 import habitsStore from '../stores/habits.js'
 import HabitHandler from './HabitHandler.vue'
+import EditModal from './EditModal.vue'
 
 const props = defineProps({
   date: String
