@@ -68,11 +68,12 @@ watchEffect(refreshHabits)
   display: flex;
   justify-content: center;
   justify-items: center;
-  color: rgb(250, 127, 19);
+  color: rgb(0, 0, 0);
   margin-bottom: 10px;
   font-weight: bold;
   font-size: 200%;
   background-color: rgb(197, 189, 179);
   border-radius: 5px;
+  opacity: 0.3;
 }
 </style>

@@ -22,26 +22,18 @@ const toggleTheme = () => {
 const themeValue = theme.value
 console.log(themeValue)
 function isLight(themeValue) {
-  //themeValue === 'light' ? 'DARK' : 'LIGHT'
   if (themeValue === 'light') {
     return 'DARK'
   } else {
     return 'LIGHT'
   }
 }
-const isLightTheme = isLight(themeValue)
+const isLightTheme = ref(isLight(themeValue))
 console.log(isLightTheme)
 </script>
 
 <style>
 @import 'src/assets/themes.css';
-
-body {
-  margin: 20px 10px 15px 10px;
-  background-color: var(--background-color);
-  color: var(--text-color);
-  padding: 0;
-}
 
 button {
   background-color: var(--primary-color);
