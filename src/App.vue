@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 const theme = ref('light')
 
@@ -19,17 +19,9 @@ const toggleTheme = () => {
   document.documentElement.setAttribute('data-theme', theme.value)
 }
 
-const themeValue = theme.value
-console.log(themeValue)
-function isLight(themeValue) {
-  if (themeValue === 'light') {
-    return 'DARK'
-  } else {
-    return 'LIGHT'
-  }
-}
-const isLightTheme = ref(isLight(themeValue))
-console.log(isLightTheme)
+const isLightTheme = computed(() => {
+  return theme.value === 'light' ? 'DARK' : 'LIGHT'
+})
 </script>
 
 <style>

@@ -1,6 +1,6 @@
 <template>
   <div class="day-view">
-    <div>
+    <div class="day-navigation">
       <DayNavigation @update:selectedDate="updateDate" />
     </div>
 
