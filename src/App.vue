@@ -1,7 +1,9 @@
 <template>
   <div :data-theme="theme">
     <header>
-      <button @click="toggleTheme">{{ isLightTheme }}</button>
+      <div class="toggle-theme-container">
+        <button class="toggle-theme-button" @click="toggleTheme">{{ isLightTheme }}</button>
+      </div>
     </header>
     <main>
       <router-view />
@@ -28,5 +30,24 @@ const isLightTheme = computed(() => {
 button {
   background-color: var(--primary-color);
   color: var(--text-color);
+}
+
+.toggle-theme-container {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+.toggle-theme-button {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: none;
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
 }
 </style>
