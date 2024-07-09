@@ -64,4 +64,13 @@ const addNewHabit = () => {
   align-items: center;
   gap: 10px;
 }
+
+@media (max-width: 600px) {
+  .habit-handler {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+}
 </style>
