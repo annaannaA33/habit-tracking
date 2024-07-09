@@ -104,7 +104,7 @@ watch(selectedDate, (newDate) => {
   display: flex;
   width: 12%;
   max-height: 30%;
-  font-size: 10px;
+
   align-items: center;
   justify-content: center;
 }

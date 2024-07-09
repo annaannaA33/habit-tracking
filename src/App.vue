@@ -33,8 +33,6 @@ console.log(isLightTheme)
 </script>
 
 <style>
-@import 'src/assets/themes.css';
-
 button {
   background-color: var(--primary-color);
   color: var(--text-color);

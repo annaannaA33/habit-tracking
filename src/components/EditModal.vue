@@ -3,7 +3,7 @@
     <!-- Button trigger modal -->
     <button
       type="button"
-      class="btn btn-primary"
+      class="modal-edit-btn"
       data-bs-toggle="modal"
       data-bs-target="#exampleModal"
     >
@@ -76,4 +76,7 @@ onMounted(() => {
 
 <style scoped>
 @import 'bootstrap/dist/css/bootstrap.min.css';
+.modal-edit-btn {
+  border-radius: 5px;
+}
 </style>
