@@ -7,7 +7,11 @@
       data-bs-toggle="modal"
       data-bs-target="#exampleModal"
     >
-      Edit
+      <img
+        src="/home/anya/frontend/vue/treker2/habit-tracker/src/assets/icons/three-dots-vertical.svg"
+        alt="edit"
+        class="icon"
+      />
     </button>
 
     <!-- Modal -->
@@ -21,8 +25,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Habit</h1>
             <button
               type="button"
               class="btn-close"
@@ -31,18 +34,11 @@
             ></button>
           </div>
           <div class="modal-body">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-              @click="deleteHabit"
-            >
-              Delete
-            </button>
+            <button type="button" class="btn btn-danger" @click="deleteHabit">Delete</button>
             <button type="button" class="btn btn-secondary" @click="editHabitName">
-              Edit habit title
+              Edit Habit Title
             </button>
-            <p>here you can edit the selected habit</p>
+            <p>Here you can edit the selected habit</p>
           </div>
           <div class="modal-footer"></div>
         </div>
@@ -52,9 +48,23 @@
 </template>
 
 <script setup>
-import 'bootstrap/dist/css/bootstrap.min.css'
 import { Modal } from 'bootstrap'
 import { onMounted } from 'vue'
+import habits from '../stores/habits'
+
+const props = defineProps({
+  habit: Object
+})
+
+const emit = defineEmits(['delete', 'editHabitName'])
+
+const deleteHabit = () => {
+  emit('delete', props.habitId)
+}
+
+const editHabitName = () => {
+  emit('editHabitName', props.habitId)
+}
 
 onMounted(() => {
   const modalElement = document.getElementById('exampleModal')
@@ -62,18 +72,6 @@ onMounted(() => {
     new Modal(modalElement)
   }
 })
-
-const props = defineProps({
-  habit: Object
-})
-const emit = defineEmits(['delete', 'editHabitName'])
-
-const deleteHabit = () => {
-  emit('delete', props.habit.id)
-}
-const editHabitName = () => {
-  emit('editHabitName', props.habit.id)
-}
 </script>
 
 <style scoped>

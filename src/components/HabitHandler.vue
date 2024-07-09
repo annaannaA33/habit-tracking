@@ -4,7 +4,13 @@
     <select v-model="newHabitCategory">
       <option v-for="title in categories.titles" :key="title" :value="title">{{ title }}</option>
     </select>
-    <button @click="addNewHabit">Add Habit</button>
+    <button @click="addNewHabit">
+      <img
+        src="/home/anya/frontend/vue/treker2/habit-tracker/src/assets/icons/plus-lg.svg"
+        alt="addNew"
+        class="icon"
+      />
+    </button>
   </div>
 </template>
 

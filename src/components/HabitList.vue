@@ -12,7 +12,13 @@
       />
       <span>{{ habit.name }}</span>
       <span>{{ habitsStore.state.categories.logos[habit.category] }}</span>
-      <button @click="deleteHabit(habit.id)" :disabled="isFutureDate">Delete</button>
+      <button @click="deleteHabit(habit.id)" :disabled="isFutureDate">
+        <img
+          src="/home/anya/frontend/vue/treker2/habit-tracker/src/assets/icons/trash.svg"
+          alt="remove"
+          class="logo"
+        />
+      </button>
       <EditModal />
     </div>
     <HabitHandler @habit-added="refreshHabits" />
