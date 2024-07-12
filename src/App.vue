@@ -6,7 +6,9 @@
       </div>
     </header>
     <main>
-      <router-view />
+      <div>
+        <router-view />
+      </div>
     </main>
   </div>
 </template>
@@ -35,19 +37,20 @@ button {
 .toggle-theme-container {
   display: flex;
   justify-content: flex-end;
-  padding: 10px;
+  margin-left: 20px;
+  padding-bottom: 10px;
 }
 .toggle-theme-button {
   background-color: var(--primary-color);
   color: var(--text-color);
   border: none;
-  padding: 5px 10px;
-  font-size: 14px;
+
+  font-size: 10px;
   cursor: pointer;
   border-radius: 5px;
   position: fixed;
   top: 10px;
-  right: 10px;
+
   z-index: 1000;
 }
 </style>

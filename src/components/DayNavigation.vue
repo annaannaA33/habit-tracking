@@ -114,7 +114,7 @@ watch(selectedDate, (newDate) => {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin: 10% 0;
+  margin: 5% 0;
 }
 
 .active {
