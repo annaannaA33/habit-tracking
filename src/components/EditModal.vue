@@ -34,7 +34,8 @@
             ></button>
           </div>
           <div class="modal-body">
-            <button type="button" class="btn btn-danger" @click="deleteHabit">Delete</button>
+            <p><strong>Habit Name:</strong></p>
+            <button type="button" class="btn btn-danger" @click="deleteHabit">Delete Habit</button>
             <button type="button" class="btn btn-secondary" @click="editHabitName">
               Edit Habit Title
             </button>
@@ -49,29 +50,36 @@
 
 <script setup>
 import { Modal } from 'bootstrap'
-import { onMounted } from 'vue'
-import habits from '../stores/habits'
+import { ref, onMounted } from 'vue'
 
-const props = defineProps({
-  habit: Object
-})
+const props = defineProps({ habit: Object })
 
 const emit = defineEmits(['delete', 'editHabitName'])
-
+const habitId = ref(null)
+const modalInstance = ref(null)
 const deleteHabit = () => {
-  emit('delete', props.habitId)
+  emit('delete', props.habit)
 }
 
 const editHabitName = () => {
-  emit('editHabitName', props.habitId)
+  emit('editHabitName', habitId.value)
+}
+
+const openModal = (id) => {
+  habitId.value = id
+  if (modalInstance.value) {
+    modalInstance.value.show()
+  }
 }
 
 onMounted(() => {
   const modalElement = document.getElementById('exampleModal')
   if (modalElement) {
-    new Modal(modalElement)
+    modalInstance.value = new Modal(modalElement)
   }
 })
+
+defineExpose({ openModal })
 </script>
 
 <style scoped>
