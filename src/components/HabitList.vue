@@ -10,8 +10,8 @@
         @change="toggleHabit(habit.id)"
         :disabled="isFutureDate"
       />
-      <span>{{ habit.name }}</span>
-      <span>{{ habitsStore.state.categories.logos[habit.category] }}</span>
+      <span>{{ habit.habitTitle }}</span>
+      <span>{{ habitsStore.habit.habitCategories.logos[habit.habitCategories] }}</span>
       <button @click="deleteHabit(habit.id)" :disabled="isFutureDate">
         <img
           src="/home/anya/frontend/vue/treker2/habit-tracker/src/assets/icons/trash.svg"

@@ -2,7 +2,9 @@
   <div class="habit-handler">
     <input v-model="newHabitName" placeholder="New habit name" />
     <select v-model="newHabitCategory">
-      <option v-for="title in categories.titles" :key="title" :value="title">{{ title }}</option>
+      <option v-for="title in habit.habitCategories.titles" :key="title" :value="title">
+        {{ title }}
+      </option>
     </select>
     <button @click="addNewHabit">
       <img
@@ -17,43 +19,25 @@
 <script setup>
 import { ref } from 'vue'
 import { addHabit } from '../stores/habits.js'
+import { habit } from '../stores/habits.js'
 
 const newHabitName = ref('')
-const newHabitCategory = ref('sport')
+const newHabitCategory = ref('')
 const emit = defineEmits(['habit-added'])
-
-const categories = {
-  titles: ['sport', 'health', 'beauty', 'finance', 'socialization', 'education'],
-  colors: {
-    sport: 'violet',
-    health: 'orange',
-    beauty: 'pink',
-    finance: 'blue',
-    socialization: 'yellow',
-    education: 'light blue'
-  },
-  logos: {
-    sport: '🚴‍♂️',
-    health: '🍎',
-    beauty: '🌸',
-    finance: '📊',
-    socialization: '🤝',
-    education: '📚'
-  }
-}
 
 const addNewHabit = () => {
   if (newHabitName.value && newHabitCategory.value) {
+    // Создаем новый объект привычки на основе шаблона
     const newHabit = {
-      id: Date.now(),
-      name: newHabitName.value,
-      category: newHabitCategory.value,
-      dates: {}
+      habitId: Date.now(),
+      habitTitle: newHabitName.value,
+      habitCategory: newHabitCategory.value,
+      dates: []
     }
     addHabit(newHabit)
     emit('habit-added')
     newHabitName.value = ''
-    newHabitCategory.value = 'sport'
+    newHabitCategory.value = habit.habitCategories.titles[0] // Сброс категории к первому элементу
   }
 }
 </script>

@@ -5,7 +5,7 @@
       type="button"
       class="modal-edit-btn"
       data-bs-toggle="modal"
-      data-bs-target="#exampleModal"
+      :data-bs-target="'#editModal-' + habit.habitId"
     >
       <img
         src="/home/anya/frontend/vue/treker2/habit-tracker/src/assets/icons/three-dots-vertical.svg"
@@ -17,7 +17,7 @@
     <!-- Modal -->
     <div
       class="modal fade"
-      id="exampleModal"
+      :id="'editModal-' + habit.habitId"
       tabindex="-1"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
@@ -34,9 +34,10 @@
             ></button>
           </div>
           <div class="modal-body">
-            <p><strong>Habit Name:</strong></p>
+            <input v-model="editedHabitTitle" placeholder="Edit habit name" />
             <button type="button" class="btn btn-danger" @click="deleteHabit">Delete Habit</button>
             <button type="button" class="btn btn-secondary" @click="editHabitName">
+              <input type="text" class="newHabitName" v-if="editHabitName" :newTitleOfHabit />
               Edit Habit Title
             </button>
             <p>Here you can edit the selected habit</p>
@@ -51,25 +52,27 @@
 <script setup>
 import { Modal } from 'bootstrap'
 import { ref, onMounted } from 'vue'
+import { defineProps, defineEmits } from 'vue'
 
 const props = defineProps({ habit: Object })
-
+//const emit = defineEmits(['delete', 'edit'])
 const emit = defineEmits(['delete', 'editHabitName'])
-const habitId = ref(null)
+let newTitleOfHabit
+const editedHabitTitle = ref(props.habit.habitId, newTitleOfHabit)
+
+//const habitId = ref(props.habit.habitId)
 const modalInstance = ref(null)
 const deleteHabit = () => {
-  emit('delete', props.habit)
+  emit('delete', props.habit.habitId)
+  //modalInstance.value.hide()
 }
 
+//const saveChanges = () => {
+//  emit('edit', { habitId: props.habit.habitId, newTitle: editedHabitTitle.value })
+//  modalInstance.value.hide()
+//}
 const editHabitName = () => {
-  emit('editHabitName', habitId.value)
-}
-
-const openModal = (id) => {
-  habitId.value = id
-  if (modalInstance.value) {
-    modalInstance.value.show()
-  }
+  emit('editHabitName', props.habit.habitId)
 }
 
 onMounted(() => {
@@ -78,8 +81,10 @@ onMounted(() => {
     modalInstance.value = new Modal(modalElement)
   }
 })
-
-defineExpose({ openModal })
+const openEditModal = () => {
+  modalInstance.value.show()
+}
+defineExpose({ openEditModal })
 </script>
 
 <style scoped>
