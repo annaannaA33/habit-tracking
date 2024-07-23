@@ -36,12 +36,26 @@
           <div class="modal-body">
             <p><strong>Habit Name:</strong></p>
             <button type="button" class="btn btn-danger" @click="deleteHabit">Delete Habit</button>
-            <button type="button" class="btn btn-secondary" @click="editHabitName">
-              Edit Habit Title
-            </button>
+            <div>
+              <input type="text" class="newHabitName" v-model="newHabitName" />
+              <button type="button" class="btn btn-secondary" @click="editHabitName">
+                Edit Habit Title
+              </button>
+            </div>
+
             <p>Here you can edit the selected habit</p>
           </div>
-          <div class="modal-footer"></div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              @click="saveButton"
+            >
+              save changes
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -51,35 +65,42 @@
 <script setup>
 import { Modal } from 'bootstrap'
 import { ref, onMounted } from 'vue'
+import habitsStore from '../stores/habits.js'
+import EditModal from './EditModal.vue'
+import HabitHandler from './HabitHandler.vue'
 
-const props = defineProps({ habit: Object })
+const props = defineProps({ habitId: Number, date: String })
+const habits = ref([])
 
-const emit = defineEmits(['delete', 'editHabitName'])
-const habitId = ref(null)
+const emit = defineEmits(['editHabitName', 'refreshHAbits'])
+
 const modalInstance = ref(null)
+const newHabitName = ref('')
+
 const deleteHabit = () => {
-  emit('delete', props.habit)
+  habitsStore.deleteHabit(props.habitId)
+  emit('refreshHabits')
 }
 
 const editHabitName = () => {
-  emit('editHabitName', habitId.value)
+  emit(newHabitName, props.habitId, 'newHabitName.value')
 }
 
-const openModal = (id) => {
-  habitId.value = id
-  if (modalInstance.value) {
-    modalInstance.value.show()
-  }
+const saveButton = () => {
+  emit('refreshHabits')
+  closeModal()
 }
+const isShowModal = ref(false)
 
+function closeModal() {
+  isShowModal.value = false
+}
 onMounted(() => {
   const modalElement = document.getElementById('exampleModal')
   if (modalElement) {
     modalInstance.value = new Modal(modalElement)
   }
 })
-
-defineExpose({ openModal })
 </script>
 
 <style scoped>
