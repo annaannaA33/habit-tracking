@@ -58,3 +58,5 @@ the buttons are all in the same style;
 linter;
 pritier;
 build the application;
+
+Vuetify, Quasar

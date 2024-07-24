@@ -66,13 +66,11 @@
 import { Modal } from 'bootstrap'
 import { ref, onMounted } from 'vue'
 import habitsStore from '../stores/habits.js'
-import EditModal from './EditModal.vue'
-import HabitHandler from './HabitHandler.vue'
 
 const props = defineProps({ habitId: Number, date: String })
 const habits = ref([])
 
-const emit = defineEmits(['editHabitName', 'refreshHAbits'])
+const emit = defineEmits(['', 'refreshHabits'])
 
 const modalInstance = ref(null)
 const newHabitName = ref('')
@@ -83,7 +81,9 @@ const deleteHabit = () => {
 }
 
 const editHabitName = () => {
-  emit(newHabitName, props.habitId, 'newHabitName.value')
+  habitsStore.editHabitName(props.habitId, newHabitName.value)
+  emit('refreshHabits')
+  //emit('editHabitName', props.habitId, newHabitName.value)
 }
 
 const saveButton = () => {

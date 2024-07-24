@@ -19,7 +19,7 @@
           class="logo"
         />
       </button>
-      <EditModal :habitId="habit.id" />
+      <EditModal :habitId="habit.id" :date="habit.date" @refreshHabits="refreshHabits" />
     </div>
     <HabitHandler @habit-added="refreshHabits" />
   </div>
@@ -55,10 +55,7 @@ const deleteHabit = (id) => {
   habitsStore.deleteHabit(id)
   refreshHabits()
 }
-const handleEditHabitName = (habitId, newHabitName) => {
-  habitsStore.editHabitName(habitId, newHabitName)
-  refreshHabits()
-}
+
 watchEffect(refreshHabits)
 </script>
 
