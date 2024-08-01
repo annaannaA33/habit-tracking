@@ -12,6 +12,7 @@
       />
       <span>{{ habit.name }}</span>
       <span>{{ habitsStore.state.categories.logos[habit.category] }}</span>
+
       <button @click="deleteHabit(habit.id)" :disabled="isFutureDate">
         <img
           src="/home/anya/frontend/vue/treker2/habit-tracker/src/assets/icons/trash.svg"
@@ -20,6 +21,19 @@
         />
       </button>
       <EditModal :habitId="habit.id" :date="habit.date" @refreshHabits="refreshHabits" />
+      <div id="app">
+        <button @click="showModal = true">Open Modal</button>
+        <Modal
+          :habitId="habit.id"
+          :date="habit.date"
+          @refreshHabits="refreshHabits"
+          :modelValue="showModal"
+          @update:modelValue="showModal = $event"
+          title="Edit Habit"
+        >
+          <p>content</p>
+        </Modal>
+      </div>
     </div>
     <HabitHandler @habit-added="refreshHabits" />
   </div>
@@ -30,12 +44,14 @@ import { computed, ref, watchEffect } from 'vue'
 import habitsStore from '../stores/habits.js'
 import HabitHandler from './HabitHandler.vue'
 import EditModal from './EditModal.vue'
+import Modal from './EditHabitModal.vue'
 
 const props = defineProps({
   date: String
 })
 
 const habits = ref([])
+const showModal = ref(false)
 
 const refreshHabits = () => {
   habits.value = habitsStore.getHabitsByDate(props.date)

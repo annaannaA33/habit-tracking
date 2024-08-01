@@ -77,13 +77,11 @@ const newHabitName = ref('')
 
 const deleteHabit = () => {
   habitsStore.deleteHabit(props.habitId)
-  emit('refreshHabits')
 }
 
 const editHabitName = () => {
   habitsStore.editHabitName(props.habitId, newHabitName.value)
   emit('refreshHabits')
-  //emit('editHabitName', props.habitId, newHabitName.value)
 }
 
 const saveButton = () => {
