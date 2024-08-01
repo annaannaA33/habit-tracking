@@ -32,12 +32,12 @@
         <Modal
           :habitId="habit.id"
           :date="habit.date"
+          :selectedHabitName="habit.name"
           @refreshHabits="refreshHabits"
           :modelValue="showModal"
           @update:modelValue="showModal = $event"
-          title="Edit Habit"
+          title="Habit Options"
         >
-          <p>content</p>
         </Modal>
       </div>
     </div>
@@ -49,7 +49,6 @@
 import { computed, ref, watchEffect } from 'vue'
 import habitsStore from '../stores/habits.js'
 import HabitHandler from './HabitHandler.vue'
-import EditModal from './EditModal.vue'
 import Modal from './EditHabitModal.vue'
 
 const props = defineProps({

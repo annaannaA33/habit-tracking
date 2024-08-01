@@ -2,23 +2,34 @@
   <div class="modal-overlay" v-if="isVisible">
     <div class="modal-container">
       <div class="modal-header">
-        <h3>{{ title }}</h3>
+        <h2 class="habit-name">{{ selectedHabit }}</h2>
+
+        <p class="habit-name">Welcome To Habit Options</p>
       </div>
       <div class="modal-body">
         <main>
-          <p><strong>Habit Name:</strong></p>
-          <p>Here you can edit the selected habit</p>
+          <div class="edit-modal-content">
+            <div class="edit-habit-name-section">
+              <input
+                placeholder="type new habit name here"
+                type="text"
+                class="newHabitName"
+                v-model="newHabitName"
+              />
 
-          <div class="editHabitName">
-            <input type="text" class="newHabitName" v-model="newHabitName" />
-            <button type="button" class="btn btn-secondary" @click="editHabitName">
-              Edit Habit Title
-            </button>
-            <button type="button" class="btn btn-danger" @click="deleteHabit">Delete Habit</button>
+              <div v-if="!isNameLengthValid" class="error-message">
+                Habit name must be between 1 and 10 characters.
+              </div>
+
+              <button type="button" @click="editHabitName" :disabled="!isValid">
+                click to save new name
+              </button>
+            </div>
+            <div class="delete-habit-section">
+              <button type="button" @click="deleteHabit">Delete Habit</button>
+            </div>
           </div>
         </main>
-
-        <slot></slot>
       </div>
       <div class="modal-footer">
         <button @click="close">Close</button>
@@ -28,15 +39,23 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 
 import habitsStore from '../stores/habits.js'
 
-const props = defineProps({ modelValue: Boolean, title: String, habitId: Number, date: String })
+const props = defineProps({
+  selectedHabitName: String,
+  modelValue: Boolean,
+  title: String,
+  habitId: Number,
+  date: String
+})
 
 const emit = defineEmits(['', 'update:modelValue', 'refreshHabits'])
 
 const isVisible = ref(props.modelValue)
+
+const selectedHabit = props.selectedHabitName
 
 const close = () => {
   isVisible.value = false
@@ -50,6 +69,11 @@ watch(
   }
 )
 const newHabitName = ref('')
+const isNameLengthValid = computed(
+  () => newHabitName.value.length > 0 && newHabitName.value.length <= 10
+)
+const isValid = computed(() => isNameLengthValid.value)
+
 const deleteHabit = () => {
   habitsStore.deleteHabit(props.habitId)
   emit('refreshHabits')
@@ -79,11 +103,12 @@ const editHabitName = () => {
   background: white;
   padding: 20px;
   border-radius: 8px;
-  width: 300px;
+  width: 400px;
 }
 
 .modal-header {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
@@ -91,6 +116,31 @@ const editHabitName = () => {
 
 .modal-footer {
   display: flex;
+  margin-top: 10px;
   justify-content: flex-end;
+  justify-content: center;
+}
+
+.error-message {
+  color: rgba(38, 28, 231, 0.247);
+  font-size: 0.875rem;
+  margin-top: 5px;
+}
+
+.edit-habit-name-section,
+.delete-habit-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 8px;
+  margin-top: 20px;
+  background-color: rgba(0, 0, 0, 0.142);
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 </style>
