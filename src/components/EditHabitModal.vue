@@ -3,8 +3,6 @@
     <div class="modal-container">
       <div class="modal-header">
         <h3>{{ title }}</h3>
-
-        <button @click="close">X</button>
       </div>
       <div class="modal-body">
         <main>
@@ -23,9 +21,6 @@
         <slot></slot>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="saveButton">
-          save changes
-        </button>
         <button @click="close">Close</button>
       </div>
     </div>
@@ -58,9 +53,7 @@ const newHabitName = ref('')
 const deleteHabit = () => {
   habitsStore.deleteHabit(props.habitId)
   emit('refreshHabits')
-}
-const saveButton = () => {
-  emit('refreshHabits')
+  close()
 }
 
 const editHabitName = () => {

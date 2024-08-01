@@ -20,9 +20,15 @@
           class="logo"
         />
       </button>
-      <EditModal :habitId="habit.id" :date="habit.date" @refreshHabits="refreshHabits" />
-      <div id="app">
-        <button @click="showModal = true">Open Modal</button>
+
+      <div class="edit-modal" id="app">
+        <button @click="showModal = true">
+          <img
+            src="/home/anya/frontend/vue/treker2/habit-tracker/src/assets/icons/three-dots-vertical.svg"
+            alt="edit"
+            class="icon"
+          />
+        </button>
         <Modal
           :habitId="habit.id"
           :date="habit.date"
